@@ -21,6 +21,8 @@ namespace Splat
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Entity e;
+
         public SplatGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -37,6 +39,8 @@ namespace Splat
         {
             Util.Initialize(this);
 
+            e = Entity.CreateEntity();
+            e.Position = new Vector2(200);
             base.Initialize();
         }
 
@@ -87,7 +91,7 @@ namespace Splat
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(Util.Texture, new Rectangle(100, 100, 32, 32), Color.Red);
+            e.Draw(spriteBatch);
             spriteBatch.DrawString(Util.Font, "Hola", Vector2.Zero, Color.White);
 
             spriteBatch.End();
