@@ -24,6 +24,11 @@ namespace SplatEngine
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public bool Enabled { get; set; }
+        public bool Visible { get; set; }
+
+        public bool CanDelete { get; private set; }
+
         public static Entity CreateEntity(int width = 32, int height = 32)
         {
             Entity e = new Entity();
@@ -36,12 +41,25 @@ namespace SplatEngine
 
         public Entity()
         {
+            Enabled = true;
+            Visible = true;
 
+            CanDelete = false;
+        }
+
+        public virtual void Update(float elapsed)
+        {
+            position.X += 100 * elapsed;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, new Rectangle(X, Y, Width, Height), Color);
+        }
+
+        public virtual void Kill()
+        {
+            CanDelete = true;
         }
     }
 }

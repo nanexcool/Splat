@@ -21,7 +21,7 @@ namespace Splat
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Entity e;
+        MainScene scene;
 
         public SplatGame()
         {
@@ -39,8 +39,10 @@ namespace Splat
         {
             Util.Initialize(this);
 
-            e = Entity.CreateEntity();
-            e.Position = new Vector2(200);
+            scene = new MainScene();
+
+            scene.Entities.Add(Entity.CreateEntity());
+
             base.Initialize();
         }
 
@@ -72,11 +74,12 @@ namespace Splat
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            scene.Update(elapsed);
 
             base.Update(gameTime);
         }
@@ -91,8 +94,9 @@ namespace Splat
 
             spriteBatch.Begin();
 
-            e.Draw(spriteBatch);
-            spriteBatch.DrawString(Util.Font, "Hola", Vector2.Zero, Color.White);
+            scene.Draw(spriteBatch);
+
+            spriteBatch.DrawString(Util.Font, scene.Entities.Count.ToString(), Vector2.Zero, Color.White);
 
             spriteBatch.End();
 
